@@ -10,35 +10,29 @@ function getMaximumGold(grid: number[][]): number {
     [0, -1],
   ];
 
-  function depthFirstSearch(
-    x: number,
-    y: number,
-    goldSoFar: number,
-  ): number {
+  function depthFirstSearch(x: number, y: number, goldSoFar: number): number {
     const currentValue = grid[x][y];
-    
+
     grid[x][y] = 0;
-    
+
     const currentGold = goldSoFar + currentValue;
     let maxGold = currentGold;
-    
-    
-    
+
     for (const [dx, dy] of directions) {
       const nx = x + dx;
       const ny = y + dy;
-      
+
       const nxInGrid = nx >= 0 && nx < m;
       const nyInGrid = ny >= 0 && ny < n;
       if (!nxInGrid || !nyInGrid) continue;
-      
+
       const newElementGT0 = grid[nx][ny] > 0;
-      
+
       if (newElementGT0) {
         maxGold = Math.max(maxGold, depthFirstSearch(nx, ny, currentGold));
       }
     }
-    
+
     grid[x][y] = currentValue;
 
     return maxGold;
